@@ -20,6 +20,11 @@ using (var scope = app.Services.CreateAsyncScope())
 
 //OS Get/////////
 
+app.MapGet("/", () => new
+{
+    mensagem= "API de Filmes - Minimal API com .NET"
+});
+
 app.MapGet("/status", () => new
 {
     status = "online",
