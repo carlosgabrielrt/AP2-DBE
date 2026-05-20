@@ -60,3 +60,4 @@ C:\Users\gabri\OneDrive\Desktop\DBE\API.Filme\obj\Debug\net10.0\refint\API.Filme
 C:\Users\gabri\OneDrive\Desktop\DBE\API.Filme\obj\Debug\net10.0\API.Filme.pdb
 C:\Users\gabri\OneDrive\Desktop\DBE\API.Filme\obj\Debug\net10.0\API.Filme.genruntimeconfig.cache
 C:\Users\gabri\OneDrive\Desktop\DBE\API.Filme\obj\Debug\net10.0\ref\API.Filme.dll
+C:\Users\gabri\OneDrive\Desktop\DBE\API.Filme\obj\Debug\net10.0\API.Filme.sourcelink.json

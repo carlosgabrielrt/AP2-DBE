@@ -6,72 +6,59 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(options 
 => options.UseSqlite("Data Source=Filme.db"));
 
+
+
 var app = builder.Build();
-
-
-
 
 
 using (var scope = app.Services.CreateAsyncScope())
 {
     var db = scope.ServiceProvider.GetRequiredService< AppDbContext> ();
     db.Database.EnsureCreated();
-
-  
     
 }
 
+//OS Get/////////
 
-app.MapGet("/", () => new
+app.MapGet("/status", () => new
 {
     status = "online",
     mensagem = "API Funcionando",
     dataHora = DateTime.Now
-
-
 });
 
 
 
 app.MapGet("/filme", async (AppDbContext db) => 
-
 {
     var filmes = await db.Filme.ToListAsync();
      return Results.Ok(filmes);
-
-
 });
 
 
 app.MapGet("/filme/{id:int}", async (int id, AppDbContext db)  => 
 {
-
     var filmes = await db.Filme.FindAsync(id);
 
     if(filmes == null){
         return Results.NotFound();
     }
-
-
     return Results.Ok(filmes);
 
 });
 
-app.MapGet("filme/{titulo}", async(string titulo, AppDbContext db)=>{
-
+app.MapGet("/filme/busca/{titulo}", async(string titulo, AppDbContext db)=>{
 
     var filme = await db.Filme.FirstOrDefaultAsync(f => f.Titulo == titulo);
     if(filme == null)
         return Results.NotFound();
     
-
     return Results.Ok(filme);
-
-
-
-
 });
 
+
+
+///o Post//////
 
 app.MapPost("/filme", async (Filme filmeReq, AppDbContext db) =>
 {
@@ -81,16 +68,16 @@ app.MapPost("/filme", async (Filme filmeReq, AppDbContext db) =>
 
 });
 
+//////O put////
+
 app.MapPut("/filme/{id:int}", async (int id, Filme filmeAtualizado, AppDbContext db)=>{
 
     var filme = await db.Filme.FindAsync(id);
 
-
     if(filme == null)
-    
+
         return Results.NotFound();
     
-
     filme.Titulo = filmeAtualizado.Titulo;
     filme.Genero = filmeAtualizado.Genero;
     filme.lancamento = filmeAtualizado.lancamento;
@@ -99,9 +86,9 @@ app.MapPut("/filme/{id:int}", async (int id, Filme filmeAtualizado, AppDbContext
     await db.SaveChangesAsync();
 
     return Results.Ok(filme);
-
-    
 });
+
+//// O Delete/////
 
     app.MapDelete("/filme/{id:int}", async (int id, AppDbContext db)=>{
         
@@ -116,7 +103,6 @@ app.MapPut("/filme/{id:int}", async (int id, Filme filmeAtualizado, AppDbContext
 
 
 });
-
 
 
 app.Run();
